@@ -10,12 +10,14 @@ import {
 import { CreateCatDto, UpdateCatDto } from './dto';
 import { CatsService } from './cats.service';
 import { Cat } from './interfaces/cat.interface';
+import { Roles } from './roles.decorator';
 
 @Controller('cats')
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
   @Post()
+  @Roles('admin')
   async create(@Body() createCatDto: CreateCatDto) {
     this.catsService.create(createCatDto);
   }

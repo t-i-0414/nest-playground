@@ -2,10 +2,11 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
-import { APP_FILTER, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE, APP_GUARD } from '@nestjs/core';
 import { HttpExceptionFilter } from './common/exception/http-exception.filter';
 import { AllExceptionsFilter } from './common/exception/all-exceptions.filter';
 import { ValidationPipe } from './common/pipe/validation.pipe';
+import { RolesGuard } from './common/guard/roles.guard';
 
 @Module({
   imports: [CatsModule],
@@ -18,6 +19,10 @@ import { ValidationPipe } from './common/pipe/validation.pipe';
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
     {
       provide: APP_PIPE,
